@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED4F23B9215933D400D9EDF9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ED4F23B8215933D400D9EDF9 /* Default-568h@2x.png */; };
 		EDAC4D0221587F3F006B12D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC4D0121587F3F006B12D0 /* AppDelegate.swift */; };
 		EDAC4D0421587F3F006B12D0 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EDAC4D0321587F3F006B12D0 /* art.scnassets */; };
 		EDAC4D0621587F3F006B12D0 /* TraceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC4D0521587F3F006B12D0 /* TraceViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED4F23B8215933D400D9EDF9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		EDAC4CFE21587F3F006B12D0 /* Trace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDAC4D0121587F3F006B12D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDAC4D0321587F3F006B12D0 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -107,7 +109,6 @@
 			children = (
 				EDAC4D0321587F3F006B12D0 /* art.scnassets */,
 				EDAC4D0A21587F40006B12D0 /* Assets.xcassets */,
-				EDAC4D0F21587F40006B12D0 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -123,6 +124,7 @@
 		EDAC4CF521587F3F006B12D0 = {
 			isa = PBXGroup;
 			children = (
+				ED4F23B8215933D400D9EDF9 /* Default-568h@2x.png */,
 				EDAC4D0021587F3F006B12D0 /* Trace */,
 				ED4F23B42159289800D9EDF9 /* Tests */,
 				EDAC4CFF21587F3F006B12D0 /* Products */,
@@ -142,6 +144,7 @@
 		EDAC4D0021587F3F006B12D0 /* Trace */ = {
 			isa = PBXGroup;
 			children = (
+				EDAC4D0F21587F40006B12D0 /* Info.plist */,
 				ED4F23B7215928D600D9EDF9 /* Models */,
 				ED4F23B5215928A600D9EDF9 /* Views */,
 				ED4F23B32159288B00D9EDF9 /* Controllers */,
@@ -275,6 +278,7 @@
 				EDAC4D0421587F3F006B12D0 /* art.scnassets in Resources */,
 				EDAC4D0E21587F40006B12D0 /* LaunchScreen.storyboard in Resources */,
 				EDAC4D0B21587F40006B12D0 /* Assets.xcassets in Resources */,
+				ED4F23B9215933D400D9EDF9 /* Default-568h@2x.png in Resources */,
 				EDAC4D0921587F3F006B12D0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

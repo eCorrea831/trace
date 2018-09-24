@@ -10,75 +10,36 @@ import UIKit
 import SceneKit
 import ARKit
 
-// TODO:
-// - Figure out how to replace sprite with image
-// - Figure out how to detect surfaces to place it
-// - Check that this implementation works for iPad as well
-
 // LATER:
+// - Check that this implementation works for iPad as well
 // - Resize the image
 // - Rotate the image
 // - Adjust image opacity
 // - Move image to another surface
 // - Save the image and its placement and opacity
 
-class TraceViewController: UIViewController, ARSCNViewDelegate {
+class TraceViewController: UIViewController {
     @IBOutlet var sceneView: ARSCNView!
 
-    var scene = SCNScene(named: "art.scnassets/ship.scn")!
+    var changingNode: SCNNode?
     let isPad = UIDevice.current.userInterfaceIdiom == .pad
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Set the view's delegate
         sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
-        
-        // Set the scene to the view
-        sceneView.scene = scene
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-
-        // Run the view's session
-        sceneView.session.run(configuration)
+        configuration.planeDetection = [.vertical, .horizontal]
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        // Pause the view's session
         sceneView.session.pause()
-    }
-
-    // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
     }
 
     @IBAction func openPhotoOptions(_ sender: Any) {
@@ -106,8 +67,20 @@ class TraceViewController: UIViewController, ARSCNViewDelegate {
 // MARK: - UIImagePickerControllerDelegate
 extension TraceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        //spriteImage = info[originalImage]
-//        scene =
+        let newImage = info[.originalImage] // or editedImage?
+        if let node = changingNode { node.geometry?.firstMaterial?.diffuse.contents = newImage }
         dismiss(animated: true, completion: .none)
+    }
+}
+
+// MARK: - ARSCNViewDelegate
+extension TraceViewController: ARSCNViewDelegate {
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard changingNode == nil, let planeAnchor = anchor as? ARPlaneAnchor  else { return }
+        let width = CGFloat(planeAnchor.extent.x)
+        let height = CGFloat(planeAnchor.extent.z)
+
+        changingNode = SCNNode(geometry: SCNPlane(width: width, height: height))
+        node.addChildNode(changingNode!)
     }
 }
