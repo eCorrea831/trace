@@ -66,9 +66,8 @@ class TraceViewController: UIViewController {
 
 // MARK: - UIImagePickerControllerDelegate
 extension TraceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let newImage = info[.originalImage] // or editedImage?
-        if let node = changingNode { node.geometry?.firstMaterial?.diffuse.contents = newImage }
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let newImage = info[.originalImage] as? UIImage, let node = changingNode { node.geometry?.firstMaterial?.diffuse.contents = newImage } // or editedImage?
         dismiss(animated: true, completion: .none)
     }
 }
