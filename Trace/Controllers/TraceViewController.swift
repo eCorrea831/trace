@@ -75,11 +75,12 @@ extension TraceViewController: UIImagePickerControllerDelegate, UINavigationCont
 // MARK: - ARSCNViewDelegate
 extension TraceViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard changingNode == nil, let planeAnchor = anchor as? ARPlaneAnchor  else { return }
+        guard let planeAnchor = anchor as? ARPlaneAnchor  else { return }
         let width = CGFloat(planeAnchor.extent.x)
         let height = CGFloat(planeAnchor.extent.z)
 
         changingNode = SCNNode(geometry: SCNPlane(width: width, height: height))
+        changingNode?.eulerAngles.x = -.pi / 2
         node.addChildNode(changingNode!)
     }
 }
