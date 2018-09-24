@@ -25,6 +25,7 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
 
+    var scene = SCNScene(named: "art.scnassets/ship.scn")!
     let isPad = UIDevice.current.userInterfaceIdiom == .pad
     
     override func viewDidLoad() {
@@ -35,9 +36,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
-        
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
         
         // Set the scene to the view
         sceneView.scene = scene
@@ -118,6 +116,7 @@ extension ViewController {
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //spriteImage = info[originalImage]
+//        scene =
         dismiss(animated: true, completion: .none)
     }
 }
