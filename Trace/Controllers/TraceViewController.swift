@@ -84,26 +84,17 @@ class TraceViewController: UIViewController, ARSCNViewDelegate {
     @IBAction func openPhotoOptions(_ sender: Any) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let cameraAction = UIAlertAction(title: "Take New Photo", style: .default) { (action:UIAlertAction) in self.takeNewPhoto() }
-        let albumAction = UIAlertAction(title: "Choose Existing Photo", style: .default) { (action:UIAlertAction) in self.openPhotoLibrary() }
+        let cameraAction = UIAlertAction(title: "Take New Photo", style: .default) { (action:UIAlertAction) in self.openImagePicker(withSourceType: .camera) }
+        let albumAction = UIAlertAction(title: "Choose Existing Photo", style: .default) { (action:UIAlertAction) in self.openImagePicker(withSourceType: .photoLibrary) }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         [cameraAction, albumAction, cancelAction].forEach { actionSheet.addAction($0) }
 
         present(actionSheet, animated: true, completion: nil)
     }
-}
-
-// MARK: - Photo Options
-extension TraceViewController {
-    func takeNewPhoto() {
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
-        openImagePicker(withSourceType: .camera)
-    }
-
-    func openPhotoLibrary() { openImagePicker(withSourceType: .photoLibrary) }
 
     func openImagePicker(withSourceType sourceType: UIImagePickerController.SourceType) {
         let imagePicker = UIImagePickerController()
+        if sourceType == .camera && !UIImagePickerController.isSourceTypeAvailable(.camera) { return }
         imagePicker.sourceType = sourceType
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
