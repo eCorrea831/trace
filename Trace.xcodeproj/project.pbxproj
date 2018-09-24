@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		EDAC4D0221587F3F006B12D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC4D0121587F3F006B12D0 /* AppDelegate.swift */; };
 		EDAC4D0421587F3F006B12D0 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EDAC4D0321587F3F006B12D0 /* art.scnassets */; };
-		EDAC4D0621587F3F006B12D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC4D0521587F3F006B12D0 /* ViewController.swift */; };
+		EDAC4D0621587F3F006B12D0 /* TraceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC4D0521587F3F006B12D0 /* TraceViewController.swift */; };
 		EDAC4D0921587F3F006B12D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDAC4D0721587F3F006B12D0 /* Main.storyboard */; };
 		EDAC4D0B21587F40006B12D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDAC4D0A21587F40006B12D0 /* Assets.xcassets */; };
 		EDAC4D0E21587F40006B12D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDAC4D0C21587F40006B12D0 /* LaunchScreen.storyboard */; };
@@ -38,7 +38,7 @@
 		EDAC4CFE21587F3F006B12D0 /* Trace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDAC4D0121587F3F006B12D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDAC4D0321587F3F006B12D0 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		EDAC4D0521587F3F006B12D0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EDAC4D0521587F3F006B12D0 /* TraceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceViewController.swift; sourceTree = "<group>"; };
 		EDAC4D0821587F3F006B12D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EDAC4D0A21587F40006B12D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EDAC4D0D21587F40006B12D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -76,12 +76,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED4F23B32159288B00D9EDF9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EDAC4D0521587F3F006B12D0 /* TraceViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		ED4F23B42159289800D9EDF9 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				EDAC4D1721587F40006B12D0 /* TraceTests */,
+				EDAC4D2221587F40006B12D0 /* TraceUITests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		ED4F23B5215928A600D9EDF9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EDAC4D0C21587F40006B12D0 /* LaunchScreen.storyboard */,
+				EDAC4D0721587F3F006B12D0 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ED4F23B6215928BD00D9EDF9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EDAC4D0321587F3F006B12D0 /* art.scnassets */,
+				EDAC4D0A21587F40006B12D0 /* Assets.xcassets */,
+				EDAC4D0F21587F40006B12D0 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		ED4F23B7215928D600D9EDF9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EDAC4D0121587F3F006B12D0 /* AppDelegate.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		EDAC4CF521587F3F006B12D0 = {
 			isa = PBXGroup;
 			children = (
 				EDAC4D0021587F3F006B12D0 /* Trace */,
-				EDAC4D1721587F40006B12D0 /* TraceTests */,
-				EDAC4D2221587F40006B12D0 /* TraceUITests */,
+				ED4F23B42159289800D9EDF9 /* Tests */,
 				EDAC4CFF21587F3F006B12D0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,13 +142,10 @@
 		EDAC4D0021587F3F006B12D0 /* Trace */ = {
 			isa = PBXGroup;
 			children = (
-				EDAC4D0121587F3F006B12D0 /* AppDelegate.swift */,
-				EDAC4D0321587F3F006B12D0 /* art.scnassets */,
-				EDAC4D0521587F3F006B12D0 /* ViewController.swift */,
-				EDAC4D0721587F3F006B12D0 /* Main.storyboard */,
-				EDAC4D0A21587F40006B12D0 /* Assets.xcassets */,
-				EDAC4D0C21587F40006B12D0 /* LaunchScreen.storyboard */,
-				EDAC4D0F21587F40006B12D0 /* Info.plist */,
+				ED4F23B7215928D600D9EDF9 /* Models */,
+				ED4F23B5215928A600D9EDF9 /* Views */,
+				ED4F23B32159288B00D9EDF9 /* Controllers */,
+				ED4F23B6215928BD00D9EDF9 /* Resources */,
 			);
 			path = Trace;
 			sourceTree = "<group>";
@@ -260,7 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDAC4D0621587F3F006B12D0 /* ViewController.swift in Sources */,
+				EDAC4D0621587F3F006B12D0 /* TraceViewController.swift in Sources */,
 				EDAC4D0221587F3F006B12D0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

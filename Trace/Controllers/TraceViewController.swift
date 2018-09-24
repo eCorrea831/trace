@@ -22,7 +22,7 @@ import ARKit
 // - Move image to another surface
 // - Save the image and its placement and opacity
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class TraceViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
 
     var scene = SCNScene(named: "art.scnassets/ship.scn")!
@@ -94,7 +94,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 }
 
 // MARK: - Photo Options
-extension ViewController {
+extension TraceViewController {
     func takeNewPhoto() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
         openImagePicker(withSourceType: .camera)
@@ -113,7 +113,7 @@ extension ViewController {
 }
 
 // MARK: - UIImagePickerControllerDelegate
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension TraceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //spriteImage = info[originalImage]
 //        scene =
