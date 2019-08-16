@@ -14,12 +14,13 @@ import ARKit
 // - Check that this implementation works for iPad as well
 // - Resize the image
 // - Rotate the image
-// - Adjust image opacity
 // - Move image to another surface
+// - Detect multiple planes, tap on the one you want to set the image to
 // - Save the image and its placement and opacity
 
 class TraceViewController: UIViewController {
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var opacitySlider: UISlider!
 
     var changingNode: SCNNode?
     let isPad = UIDevice.current.userInterfaceIdiom == .pad
@@ -27,19 +28,22 @@ class TraceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
-        sceneView.showsStatistics = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = [.vertical, .horizontal]
-        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        sceneView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
+    }
+
+    @IBAction func adjustOpacity(_ sender: Any) {
+        changingNode?.opacity = CGFloat(opacitySlider.value)
     }
 
     @IBAction func openPhotoOptions(_ sender: Any) {
@@ -67,7 +71,7 @@ class TraceViewController: UIViewController {
 // MARK: - UIImagePickerControllerDelegate
 extension TraceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let newImage = info[.originalImage] as? UIImage, let node = changingNode { node.geometry?.firstMaterial?.diffuse.contents = newImage } // or editedImage?
+        if let newImage = info[.originalImage] as? UIImage, let node = changingNode { node.geometry?.firstMaterial?.diffuse.contents = newImage }
         dismiss(animated: true, completion: .none)
     }
 }
@@ -81,6 +85,7 @@ extension TraceViewController: ARSCNViewDelegate {
 
         changingNode = SCNNode(geometry: SCNPlane(width: width, height: height))
         changingNode?.eulerAngles.x = -.pi / 2
+
         node.addChildNode(changingNode!)
     }
 }
