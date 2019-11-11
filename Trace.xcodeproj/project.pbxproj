@@ -16,6 +16,7 @@
 		EDAC4D0E21587F40006B12D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDAC4D0C21587F40006B12D0 /* LaunchScreen.storyboard */; };
 		EDAC4D1921587F40006B12D0 /* TraceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC4D1821587F40006B12D0 /* TraceTests.swift */; };
 		EDAC4D2421587F40006B12D0 /* TraceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC4D2321587F40006B12D0 /* TraceUITests.swift */; };
+		EDEE4D87232C3C3B00574B9C /* CameraDirectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEE4D86232C3C3B00574B9C /* CameraDirectionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		EDAC4D1F21587F40006B12D0 /* TraceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TraceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDAC4D2321587F40006B12D0 /* TraceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceUITests.swift; sourceTree = "<group>"; };
 		EDAC4D2521587F40006B12D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDEE4D86232C3C3B00574B9C /* CameraDirectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDirectionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				EDAC4D0C21587F40006B12D0 /* LaunchScreen.storyboard */,
 				EDAC4D0721587F3F006B12D0 /* Main.storyboard */,
+				EDEE4D86232C3C3B00574B9C /* CameraDirectionsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDEE4D87232C3C3B00574B9C /* CameraDirectionsView.swift in Sources */,
 				EDAC4D0621587F3F006B12D0 /* TraceViewController.swift in Sources */,
 				EDAC4D0221587F3F006B12D0 /* AppDelegate.swift in Sources */,
 			);

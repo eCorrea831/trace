@@ -14,8 +14,6 @@ import ARKit
 // - Check that this implementation works for iPad as well
 // - Resize the image
 // - Rotate the image
-// - Move image to another surface
-// - Detect multiple planes, tap on the one you want to set the image to
 // - Save the image and its placement and opacity
 
 class TraceViewController: UIViewController {
@@ -23,6 +21,8 @@ class TraceViewController: UIViewController {
     @IBOutlet weak var opacitySlider: UISlider!
 
     var changingNode: SCNNode?
+    var selectedNode: SCNNode?
+
     let isPad = UIDevice.current.userInterfaceIdiom == .pad
     
     override func viewDidLoad() {
@@ -41,37 +41,58 @@ class TraceViewController: UIViewController {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
+}
+
+// MARK: - Action Methods
+extension TraceViewController {
+    @IBAction func selectPlane(_ gesture: UITapGestureRecognizer) {
+        let touchPosition = gesture.location(in: sceneView)
+        let hitTestResult = sceneView.hitTest(touchPosition, options: nil)
+
+        guard !hitTestResult.isEmpty, let hitResult = hitTestResult.first else { return }
+        selectedNode = hitResult.node
+        highlightNode(hitResult.node) //unhighlight the others
+        addCameraDirections()
+    }
 
     @IBAction func adjustOpacity(_ sender: Any) {
-        changingNode?.opacity = CGFloat(opacitySlider.value)
+        selectedNode?.opacity = CGFloat(opacitySlider.value)
     }
+}
 
+// MARK: - Camera & Photo Methods
+extension TraceViewController {
     @IBAction func openPhotoOptions(_ sender: Any) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let cameraAction = UIAlertAction(title: "Take New Photo", style: .default) { (action:UIAlertAction) in self.openImagePicker(withSourceType: .camera) }
-        let albumAction = UIAlertAction(title: "Choose Existing Photo", style: .default) { (action:UIAlertAction) in self.openImagePicker(withSourceType: .photoLibrary) }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        [cameraAction, albumAction, cancelAction].forEach { actionSheet.addAction($0) }
+         let cameraAction = UIAlertAction(title: "Take New Photo", style: .default) { (action:UIAlertAction) in self.openImagePicker(withSourceType: .camera) }
+         let albumAction = UIAlertAction(title: "Choose Existing Photo", style: .default) { (action:UIAlertAction) in self.openImagePicker(withSourceType: .photoLibrary) }
+         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+         [cameraAction, albumAction, cancelAction].forEach { actionSheet.addAction($0) }
 
-        present(actionSheet, animated: true, completion: nil)
-    }
+         present(actionSheet, animated: true, completion: nil)
+     }
 
-    func openImagePicker(withSourceType sourceType: UIImagePickerController.SourceType) {
-        let imagePicker = UIImagePickerController()
-        if sourceType == .camera && !UIImagePickerController.isSourceTypeAvailable(.camera) { return }
-        imagePicker.sourceType = sourceType
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        imagePicker.preferredContentSize = view.frame.size
-        present(imagePicker, animated: true, completion: nil)
-    }
+     func addCameraDirections() {
+        guard let node = selectedNode else { return }
+        node.geometry?.firstMaterial?.diffuse.contents = CameraDirectionsView()
+     }
+
+     func openImagePicker(withSourceType sourceType: UIImagePickerController.SourceType) {
+         let imagePicker = UIImagePickerController()
+         if sourceType == .camera && !UIImagePickerController.isSourceTypeAvailable(.camera) { return }
+         imagePicker.sourceType = sourceType
+         imagePicker.delegate = self
+         imagePicker.allowsEditing = true
+         imagePicker.preferredContentSize = view.frame.size
+         present(imagePicker, animated: true, completion: nil)
+     }
 }
 
 // MARK: - UIImagePickerControllerDelegate
 extension TraceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let newImage = info[.originalImage] as? UIImage, let node = changingNode { node.geometry?.firstMaterial?.diffuse.contents = newImage }
+        if let newImage = info[.originalImage] as? UIImage, let node = selectedNode { node.geometry?.firstMaterial?.diffuse.contents = newImage }
         dismiss(animated: true, completion: .none)
     }
 }
@@ -87,5 +108,56 @@ extension TraceViewController: ARSCNViewDelegate {
         changingNode?.eulerAngles.x = -.pi / 2
 
         node.addChildNode(changingNode!)
+    }
+}
+
+extension TraceViewController {
+    func createLineNode(fromPos origin: SCNVector3, toPos destination: SCNVector3, color: UIColor) -> SCNNode {
+        let line = lineFrom(vector: origin, toVector: destination)
+        let lineNode = SCNNode(geometry: line)
+        let planeMaterial = SCNMaterial()
+        planeMaterial.diffuse.contents = color
+        line.materials = [planeMaterial]
+
+        return lineNode
+    }
+
+    func lineFrom(vector vector1: SCNVector3, toVector vector2: SCNVector3) -> SCNGeometry {
+        let indices: [Int32] = [0, 1]
+
+        let source = SCNGeometrySource(vertices: [vector1, vector2])
+        let element = SCNGeometryElement(indices: indices, primitiveType: .line)
+
+        return SCNGeometry(sources: [source], elements: [element])
+    }
+
+
+    func highlightNode(_ node: SCNNode) {
+        let (min, max) = node.boundingBox
+        let zCoord = node.position.z
+        let topLeft = SCNVector3Make(min.x, max.y, zCoord)
+        let bottomLeft = SCNVector3Make(min.x, min.y, zCoord)
+        let topRight = SCNVector3Make(max.x, max.y, zCoord)
+        let bottomRight = SCNVector3Make(max.x, min.y, zCoord)
+
+
+        let bottomSide = createLineNode(fromPos: bottomLeft, toPos: bottomRight, color: .red)
+        let leftSide = createLineNode(fromPos: bottomLeft, toPos: topLeft, color: .red)
+        let rightSide = createLineNode(fromPos: bottomRight, toPos: topRight, color: .red)
+        let topSide = createLineNode(fromPos: topLeft, toPos: topRight, color: .red)
+
+        [bottomSide, leftSide, rightSide, topSide].forEach {
+            $0.name = "test"
+            node.addChildNode($0)
+        }
+    }
+
+    func unhighlightNode(_ node: SCNNode) {
+        let highlightningNodes = node.childNodes { (child, stop) -> Bool in
+            child.name == "test"
+        }
+        highlightningNodes.forEach {
+            $0.removeFromParentNode()
+        }
     }
 }

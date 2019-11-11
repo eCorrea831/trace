@@ -18,6 +18,10 @@
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="9cX-lM-UU9" appends="YES" id="Jca-nx-jW0"/>
+                                </connections>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H68-Hx-2OU">
                                 <rect key="frame" x="162.5" y="613.5" width="50" height="33.5"/>
@@ -46,7 +50,7 @@
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="H68-Hx-2OU" secondAttribute="bottom" constant="20" id="aM8-A3-8oY"/>
                             <constraint firstItem="B2M-kd-Dju" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="20" id="nd4-hu-Rd8"/>
-                            <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
+                            <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" id="rJc-2c-zQA"/>
                             <constraint firstItem="H68-Hx-2OU" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="wpI-h1-nLU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
@@ -57,6 +61,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="9cX-lM-UU9">
+                    <connections>
+                        <action selector="selectPlane:" destination="BV1-FR-VrT" id="X3r-TH-R3y"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
