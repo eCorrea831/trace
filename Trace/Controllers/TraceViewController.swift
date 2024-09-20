@@ -10,11 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-// LATER:
 // - Check that this implementation works for iPad as well
-// - Resize the image
-// - Rotate the image
-// - Save the image and its placement and opacity
 
 class TraceViewController: UIViewController {
     @IBOutlet var sceneView: ARSCNView!
@@ -32,6 +28,7 @@ class TraceViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = [.vertical, .horizontal]
         sceneView.session.run(configuration)
@@ -39,6 +36,7 @@ class TraceViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
         sceneView.session.pause()
     }
 }
@@ -50,6 +48,7 @@ extension TraceViewController {
         let hitTestResult = sceneView.hitTest(touchPosition, options: nil)
 
         guard !hitTestResult.isEmpty, let hitResult = hitTestResult.first else { return }
+
         selectedNode = hitResult.node
         highlightNode(hitResult.node) //unhighlight the others
         addCameraDirections()
@@ -75,6 +74,7 @@ extension TraceViewController {
 
      func addCameraDirections() {
         guard let node = selectedNode else { return }
+
         node.geometry?.firstMaterial?.diffuse.contents = CameraDirectionsView()
      }
 
@@ -85,6 +85,7 @@ extension TraceViewController {
          imagePicker.delegate = self
          imagePicker.allowsEditing = true
          imagePicker.preferredContentSize = view.frame.size
+
          present(imagePicker, animated: true, completion: nil)
      }
 }
@@ -93,6 +94,7 @@ extension TraceViewController {
 extension TraceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let newImage = info[.originalImage] as? UIImage, let node = selectedNode { node.geometry?.firstMaterial?.diffuse.contents = newImage }
+
         dismiss(animated: true, completion: .none)
     }
 }
@@ -101,6 +103,7 @@ extension TraceViewController: UIImagePickerControllerDelegate, UINavigationCont
 extension TraceViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor  else { return }
+
         let width = CGFloat(planeAnchor.extent.x)
         let height = CGFloat(planeAnchor.extent.z)
 
@@ -139,7 +142,6 @@ extension TraceViewController {
         let bottomLeft = SCNVector3Make(min.x, min.y, zCoord)
         let topRight = SCNVector3Make(max.x, max.y, zCoord)
         let bottomRight = SCNVector3Make(max.x, min.y, zCoord)
-
 
         let bottomSide = createLineNode(fromPos: bottomLeft, toPos: bottomRight, color: .red)
         let leftSide = createLineNode(fromPos: bottomLeft, toPos: topLeft, color: .red)

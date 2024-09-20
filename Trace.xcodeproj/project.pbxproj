@@ -110,6 +110,7 @@
 		ED4F23B6215928BD00D9EDF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EDAC4D0F21587F40006B12D0 /* Info.plist */,
 				EDAC4D0321587F3F006B12D0 /* art.scnassets */,
 				EDAC4D0A21587F40006B12D0 /* Assets.xcassets */,
 			);
@@ -147,7 +148,6 @@
 		EDAC4D0021587F3F006B12D0 /* Trace */ = {
 			isa = PBXGroup;
 			children = (
-				EDAC4D0F21587F40006B12D0 /* Info.plist */,
 				ED4F23B7215928D600D9EDF9 /* Models */,
 				ED4F23B5215928A600D9EDF9 /* Views */,
 				ED4F23B32159288B00D9EDF9 /* Controllers */,
@@ -242,13 +242,16 @@
 				TargetAttributes = {
 					EDAC4CFD21587F3F006B12D0 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = "";
 					};
 					EDAC4D1321587F40006B12D0 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = "";
 						TestTargetID = EDAC4CFD21587F3F006B12D0;
 					};
 					EDAC4D1E21587F40006B12D0 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = "";
 						TestTargetID = EDAC4CFD21587F3F006B12D0;
 					};
 				};
